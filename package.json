@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "NODE_ENV=development nodemon index.js",
-    "start": "node index.js",
-    "db:start": "pg_ctl -D /usr/local/var/postgres start",
-    "db:stop": "pg_ctl -D /usr/local/var/postgres stop"
+    "dev": "NODE_ENV=development nodemon index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +22,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "pg": "^8.0.3",
     "pg-hstore": "^2.3.3",

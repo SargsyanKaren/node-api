@@ -1,6 +1,13 @@
+const express = require('express');
+
+const { getToken } = require('../../utils');
 const Users = require('../controllers/user');
 
-module.exports = app => {
-    app.post('/api/users', Users.signUp);
-    app.get('/api/users', Users.getUsers);
-}
+const router = express.Router();
+
+router.post('/login', Users.signIn);
+router.post('/users', getToken, Users.signUp);
+router.get('/users', getToken, Users.getUsers);
+router.get('/user/:id', getToken, Users.getUser);
+
+module.exports = router;

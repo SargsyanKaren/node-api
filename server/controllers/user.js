@@ -1,30 +1,75 @@
+const jwt = require('jsonwebtoken');
+
 const { User } = require('../models');
 
 class Users {
-  static signUp(req, res) {
-    const { name, username, email, password } = req.body;
+  static signIn(req, res) {
+    const { email, password } = req.body;
 
     return User
-      .create({
-        name,
-        username,
-        email,
-        password
+      .findOne({ where: { email, password } })
+      .then(user => {
+        if (user) {
+          jwt.sign({}, process.env.PRIVATE_KEY, (err, token) => {
+            res.status(200).send({
+              success: true,
+              user,
+              token
+            });
+          })
+        } else {
+          res.sendStatus(401);
+        }
       })
-      .then(userData => res.status(200).send({
-        success: true,
-        message: 'user successfully created',
-        userData
-      }))
+  }
+
+  static signUp(req, res) {
+    const { name, username, email, password } = req.body;
+    const { token } = req;
+
+    jwt.verify(token, process.env.PRIVATE_KEY, (err, authData) => {
+      if (err) res.sendStatus(403)
+      else {
+        return User
+          .create({ name, username, email, password })
+          .then(userData => res.status(200).send({
+            success: true,
+            userData
+          }));
+      }
+    })
   }
 
   static getUsers(req, res) {
-    return User
-      .findAll()
-      .then(userData => res.status(200).send({
-        success: true,
-        users: userData
-      }))
+    const { token } = req;
+
+    jwt.verify(token, process.env.PRIVATE_KEY, (err, authData) => {
+      if (err) res.sendStatus(403)
+      else {
+        return User
+          .findAll()
+          .then(usersData => res.status(200).send({
+            success: true,
+            users: usersData,
+          }));
+      }
+    })
+  }
+
+  static getUser(req, res) {
+    const { id } = req.params;
+
+    jwt.verify(token, process.env.PRIVATE_KEY, (err, authData) => {
+      if (err) res.sendStatus(403)
+      else {
+        return User
+          .findOne({ where: { id } })
+          .then(userData => res.status(200).send({
+            success: true,
+            user: userData
+          }));
+      }
+    })
   }
 }
 
