@@ -2,6 +2,7 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
+  "author": "Karen Sargsyan <ksarg9618@gmail.com>",
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development nodemon index.js",
@@ -11,13 +12,13 @@
     "type": "git",
     "url": "git+https://SargsyanKaren@github.com/SargsyanKaren/node-api.git"
   },
-  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/SargsyanKaren/node-api/issues"
   },
   "homepage": "https://github.com/SargsyanKaren/node-api#readme",
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

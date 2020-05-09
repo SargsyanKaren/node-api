@@ -4,7 +4,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const routes = require('./server/routes');
+const routes = require('./routes');
 
 const hostName = process.env.HOSTNAME || '127.0.0.1';
 const port = process.env.PORT || 4000;

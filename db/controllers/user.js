@@ -24,14 +24,14 @@ class Users {
   }
 
   static signUp(req, res) {
-    const { name, username, email, password } = req.body;
+    const { name, email, password } = req.body;
     const { token } = req;
 
     jwt.verify(token, process.env.PRIVATE_KEY, (err, authData) => {
       if (err) res.sendStatus(403)
       else {
         return User
-          .create({ name, username, email, password })
+          .create({ name, email, password })
           .then(userData => res.status(200).send({
             success: true,
             userData
