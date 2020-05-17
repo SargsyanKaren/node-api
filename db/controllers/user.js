@@ -36,7 +36,7 @@ class Users {
 
     bcrypt.hash(password, 10, (err, hashPassword) => {
       console.log(err, hashPassword);
-      
+
       if (!err) {
         return User
           .create({ name, email, password: hashPassword })
@@ -49,51 +49,32 @@ class Users {
   }
 
   static getUsers(req, res) {
-    const { token } = req;
-
-    jwt.verify(token, process.env.PRIVATE_KEY, (err, authData) => {
-      if (err) res.sendStatus(403)
-      else {
-        return User
-          .findAll()
-          .then(usersData => res.status(200).send({
-            success: true,
-            users: usersData,
-          }));
-      }
-    })
+    return User
+      .findAll()
+      .then(usersData => res.status(200).send({
+        success: true,
+        users: usersData,
+      }));
   }
 
   static getUser(req, res) {
     const { id } = req.params;
-    const { token } = req;
 
-    jwt.verify(token, process.env.PRIVATE_KEY, (err, authData) => {
-      if (err) res.sendStatus(403)
-      else {
-        return User
-          .findOne({ where: { id } })
-          .then(userData => res.status(200).send({
-            success: true,
-            user: userData
-          }));
-      }
-    })
+    return User
+      .findOne({ where: { id } })
+      .then(userData => res.status(200).send({
+        success: true,
+        user: userData
+      }));
   }
 
   static removeUser(req, res) {
     const { id } = req.params;
-    const { token } = req;
 
-    jwt.verify(token, process.env.PRIVATE_KEY, (err, authData) => {
-      if (err) res.sendStatus(403);
-      else {
-        return User.destroy({ where: { id } })
-        .then(user => res.status(200).send({
-          success: true
-        }))
-      }
-    })
+    return User.destroy({ where: { id } })
+      .then(user => res.status(200).send({
+        success: true
+      }))
   }
 }
 

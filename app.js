@@ -1,4 +1,5 @@
 "use strict";
+require('dotenv').config();
 const http = require('http');
 const express = require('express');
 const logger = require('morgan');
@@ -19,10 +20,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use('/api', routes);
-
-app.get('*', (req, res) => {
-  res.end();
-});
 
 server.listen(port, hostName, () => {
   console.log(`Server running at http://${hostName}:${port}`);
