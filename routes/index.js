@@ -19,6 +19,8 @@ router.get('/users', Users.getUsers);
 router.get('/user/:id', Users.getUser);
 router.delete('/user/:id', Users.removeUser)
 
-router.post('/upload', fileUpload);
+router.post('/upload', fileUpload, (req, res) => {
+    res.status(200).send({ success: true });
+});
 
 module.exports = router;
